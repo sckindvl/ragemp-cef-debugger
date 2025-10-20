@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAGEMP CEF Debugging</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        .devtools-container {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            background: white;
+        }
+        .devtools-iframe {
+            width: 100%;
+            height: calc(100vh - 12rem);
+            border: none;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+        .status-connected {
+            background-color: #10b981;
+            animation: pulse 2s infinite;
+        }
+        .status-disconnected {
+            background-color: #ef4444;
+        }
+        .status-reconnecting {
+            background-color: #f59e0b;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .tab {
+            transition: all 0.2s;
+        }
+        .tab:hover {
+            background-color: #f3f4f6;
+        }
+        .tab.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .tab.reconnecting {
+            background-color: #f59e0b;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen">
+        <header class="bg-white border-b border-gray-200 shadow-sm">
+            <div class="max-w-full mx-auto px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">RAGE:MP CEF Debugging</h1>
+                        <p class="text-sm text-gray-500 mt-1">Custom DevTools Manager</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div id="connection-status" class="flex items-center text-sm">
+                            <span class="status-dot status-disconnected"></span>
+                            <span class="text-gray-600">Not Connected</span>
+                        </div>
+                        <div id="port-display" class="px-4 py-2 bg-gray-100 rounded-lg text-sm text-gray-700">
+                            Port: <span id="port-number" class="font-mono font-semibold">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+        <main class="max-w-full mx-auto px-6 py-6">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 mb-6">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-lg font-semibold text-gray-900">Inspectable WebContents</h2>
+                </div>
+                <div id="target-list" class="p-4">
+                    <div class="text-center text-gray-500 py-8">
+                        <p>Configure CEF debugging port to start</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tabs-container" class="hidden mb-4">
+                <div class="flex gap-2 bg-white p-2 rounded-lg shadow-sm border border-gray-200 overflow-x-auto">
+                </div>
+            </div>
+
+            <div id="devtools-panels" class="hidden">
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
