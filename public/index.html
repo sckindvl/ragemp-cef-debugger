@@ -56,6 +56,25 @@
             background-color: #f59e0b;
             color: white;
         }
+        .fullscreen-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 9999;
+            background: white;
+        }
+        .fullscreen-mode .devtools-iframe {
+            height: 100vh;
+        }
+        .fullscreen-btn {
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .fullscreen-btn:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="bg-gray-50">

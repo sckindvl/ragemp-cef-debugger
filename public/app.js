@@ -244,8 +244,15 @@ function createDevToolsPanel(title, webSocketDebuggerUrl) {
     panel.id = `panel-${title}`;
     panel.className = 'devtools-container hidden';
     panel.innerHTML = `
-        <div class="bg-gray-100 px-4 py-2 border-b border-gray-200">
+        <div class="bg-gray-100 px-4 py-2 border-b border-gray-200 flex items-center justify-between">
             <h3 class="font-semibold text-gray-700">${escapeHtml(title)}</h3>
+            <button
+                onclick="toggleFullscreen('${escapeHtml(title)}')"
+                class="fullscreen-btn px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-sm text-gray-700 transition"
+                title="Toggle Fullscreen"
+            >
+                ⛶ Fullscreen
+            </button>
         </div>
         <iframe
             id="iframe-${title}"
@@ -311,7 +318,31 @@ function showNotification(message, type = 'info') {
     console.log(`[${type.toUpperCase()}] ${message}`);
 }
 
+function toggleFullscreen(title) {
+    const panel = document.getElementById(`panel-${title}`);
+    if (!panel) return;
+
+    const isFullscreen = panel.classList.contains('fullscreen-mode');
+
+    if (isFullscreen) {
+        // Exit fullscreen
+        panel.classList.remove('fullscreen-mode');
+        const button = panel.querySelector('.fullscreen-btn');
+        if (button) {
+            button.textContent = '⛶ Fullscreen';
+        }
+    } else {
+        // Enter fullscreen
+        panel.classList.add('fullscreen-mode');
+        const button = panel.querySelector('.fullscreen-btn');
+        if (button) {
+            button.textContent = '⛶ Exit Fullscreen';
+        }
+    }
+}
+
 window.openDevTools = openDevTools;
 window.closeDevTools = closeDevTools;
+window.toggleFullscreen = toggleFullscreen;
 
 init();
